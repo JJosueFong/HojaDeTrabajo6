@@ -9,6 +9,7 @@ package hoja6;
 import java.util.Iterator;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.TreeSet;
 
 /**
  *
@@ -32,6 +33,7 @@ public class Main {
         System.out.println("3. LinkedHashSet");                
         System.out.println("Número de opción: ");
         opcion1 = ingreso.nextInt();
+        //Se define que tipo de Set se utilizara
         switch(opcion1){
             case 1:{
                 java = factory.getClass("Hash");
@@ -52,6 +54,7 @@ public class Main {
                 break;
             }
         }
+        //ciclo para ingresar todos los nombres y agregarlos a los Sets
         opcion1 = 0;
         while(opcion1!=1){
             System.out.println("Ingrese su nombre: ");
@@ -82,29 +85,82 @@ public class Main {
             System.out.println("Número de opción: ");
             opcion1 = ingreso.nextInt();
         }
+        //mostrar la interseccion de los 3 conjuntos
         Iterator iterator = java.iterator();
         System.out.println("Interseccion de los 3 conjuntos:");
         while(iterator.hasNext()){
             String elemento = (String) iterator.next();
             if(web.contains(elemento)&&cel.contains(elemento))
-                System.out.print(" " +elemento);
+                System.out.print(elemento+ ", ");
         }
-        
+        //mostrar la experiencia en java pero no web
+        System.out.println(" ");
         iterator = java.iterator();
         System.out.println("Experiencia en java pero no web:");
         while(iterator.hasNext()){
             String elemento = (String) iterator.next();
             if(!web.contains(elemento))
-                System.out.print(" " +elemento);
+                System.out.print(elemento+ ", ");
         }
-        
+        //mostrar Experiencia web y celulares pero no java
+        System.out.println(" ");
         iterator = web.iterator();
         System.out.println("Experiencia web y celulares pero no java:");
         while(iterator.hasNext()){
             String elemento = (String) iterator.next();
             if(cel.contains(elemento)&&(!java.contains(elemento)))
-                System.out.print(" " +elemento);
+                System.out.print(elemento+ ", ");
         }
+        //mostrar Experiencia web o celulares pero no java
+        System.out.println(" ");
+        iterator = web.iterator();
+        Iterator iterator2 = cel.iterator();
+        System.out.println("Experiencia web o celulares pero no java:");
+        while(iterator.hasNext()){
+            String elemento = (String) iterator.next();
+            if((!java.contains(elemento)))
+                System.out.print(elemento+ ", ");
+            String elemento2 = (String) iterator2.next();
+            if((!java.contains(elemento2))&&(elemento!=elemento2))
+                System.out.print(elemento2+ ", ");
+        }
+        //mostar si los desarrolladores de java son un subconjunto de los web
+        System.out.println(" ");
+        iterator = java.iterator();
+        boolean bandera = true;
+        while(iterator.hasNext()){
+            String elemento = (String) iterator.next();
+            if(!web.contains(elemento))
+                bandera = false;
+        }
+        if(bandera) System.out.println("Los desarrolladores de Java SI son un subconjunto de los desarrolladores web. ");
+        else System.out.println("Los desarrolladores de Java NO son un subconjunto de los desarrolladores web. ");
+        //mostrar el subconjunto mas grande y los nombres ordenados
+        if((java.size()>web.size())&&(java.size()>cel.size())){
+            System.out.println("Java es el conjunto de desarrolladores mas grande. ");
+            System.out.println(java);
+            Set orden = new TreeSet(java);
+            System.out.println("Nombres ordenados: ");
+            System.out.println(orden);
+        }
+        else 
+            if ((java.size()<web.size())&&(web.size()>cel.size())){
+               System.out.println("Web es el conjunto de desarrolladores mas grande. "); 
+               System.out.println(web);
+               Set orden = new TreeSet(web);
+               System.out.println("Nombres ordenados: ");
+               System.out.println(orden);
+            }
+        else
+                if ((java.size()<cel.size())&&(web.size()<cel.size())){
+                    System.out.println("Celulares es el conjunto de desarrolladores mas grande. "); 
+                    System.out.println(cel); 
+                    Set orden = new TreeSet(cel);
+                    System.out.println("Nombres ordenados: ");
+                    System.out.println(orden);
+                }
+        else
+                    System.out.println("Todo los conjuntos de desarrolladores son del mismo tamaño. ");
     }
     
 }
